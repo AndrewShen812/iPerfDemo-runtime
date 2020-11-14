@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.shenyong.iperf.runtime.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/tv_server_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="iPerf3 Server:"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:includeFontPadding="false"
+            android:layout_margin="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_server_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address:"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/tv_server_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_server_title" />
+
+        <EditText
+            android:id="@+id/et_addr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="server address"
+            android:text="@={viewModel.serverAddr}"
+            android:textColor="@android:color/black"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintTop_toTopOf="@id/tv_server_addr"
+            app:layout_constraintBottom_toBottomOf="@id/tv_server_addr"
+            app:layout_constraintStart_toEndOf="@id/tv_server_addr" />
+
+        <TextView
+            android:id="@+id/tv_server_port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Port:"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/et_addr"
+            app:layout_constraintTop_toTopOf="@id/tv_server_addr" />
+
+        <EditText
+            android:id="@+id/et_port"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.serverPort}"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toTopOf="@id/tv_server_addr"
+            app:layout_constraintBottom_toBottomOf="@id/tv_server_addr"
+            app:layout_constraintStart_toEndOf="@id/tv_server_port"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_go"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="GO"
+            android:layout_marginTop="16dp"
+            android:onClick="onExecIperf"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintTop_toBottomOf="@id/tv_server_addr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toBottomOf="@id/btn_go"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/black"
+                tools:text="result"
+                android:textSize="12sp"
+                android:text="@{viewModel.execOutput}"/>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
