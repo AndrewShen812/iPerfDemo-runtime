@@ -29,6 +29,7 @@
 
 #include "iperf_config.h"
 
+#include <stdio.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #ifdef HAVE_STDINT_H
@@ -46,6 +47,21 @@
 #include "timer.h"
 #include "queue.h"
 #include "cjson.h"
+
+#include <jni.h>
+
+/* 调用类型：jni 调用 */
+#define INVOKE_TYPE_JNI 0
+/* 调用类型：可执行文件 调用 */
+#define INVOKE_TYPE_EXEC 1
+int invoke_flag;
+extern int invoke_flag;
+
+#define SAFE_EXIT(code)  do {\
+    if (invoke_flag == INVOKE_TYPE_EXEC) {\
+        exit(code);\
+    }\
+} while(0)
 
 typedef uint64_t iperf_size_t;
 
@@ -123,6 +139,7 @@ struct iperf_settings
 };
 
 struct iperf_test;
+struct jni_callback;
 
 struct iperf_stream
 {
@@ -133,8 +150,8 @@ struct iperf_stream
     int       remote_port;
     int       socket;
     int       id;
-	/* XXX: is settings just a pointer to the same struct in iperf_test? if not, 
-		should it be? */
+    /* XXX: is settings just a pointer to the same struct in iperf_test? if not,
+        should it be? */
     struct iperf_settings *settings;	/* pointer to structure settings */
 
     /* non configurable members */
@@ -198,6 +215,32 @@ struct xbind_entry {
     TAILQ_ENTRY(xbind_entry) link;
 };
 
+struct jni_callback {
+    JNIEnv *env;
+    jobject callbackObj;
+    /* descriptor: (Ljava/lang/String;I)V */
+    jmethodID connectingMethod;
+
+    /* descriptor: (Ljava/lang/String;ILjava/lang/String;I)V */
+    jmethodID connectedMethod;
+
+    /* descriptor: (FFLjava/lang/String;Ljava/lang/String;)V */
+    jmethodID intervalMethod;
+
+    /* descriptor: (FFLjava/lang/String;Ljava/lang/String;)V */
+    jmethodID resultMethod;
+
+    /* descriptor: (Ljava/lang/String;I)V */
+    jmethodID errorMethod;
+
+    /* callback functions */
+    void (*on_connecting)(struct iperf_test *, char *, int);
+    void (*on_connected)(struct iperf_test *, char[], int, char[], int);
+    void (*on_interval)(struct iperf_test *, float, float, char[], char[]);
+    void (*on_result)(struct iperf_test *, float, float, char[], char[]);
+    void (*on_error)(struct iperf_test *, char *);
+};
+
 struct iperf_test
 {
     char      role;                             /* 'c' lient or 's' erver */
@@ -249,7 +292,7 @@ struct iperf_test
     fd_set    read_set;                         /* set of read sockets */
     fd_set    write_set;                        /* set of write sockets */
 
-    /* Interval related members */ 
+    /* Interval related members */
     int       omitting;
     double    stats_interval;
     double    reporter_interval;
@@ -295,6 +338,7 @@ struct iperf_test
     /* Server output (use on server side only) */
     TAILQ_HEAD(iperf_textlisthead, iperf_textline) server_output_list;
 
+    struct jni_callback *jniCallback;
 };
 
 /* default settings */

@@ -60,6 +60,7 @@ static int run(struct iperf_test *test);
 int
 main(int argc, char **argv)
 {
+    invoke_flag = INVOKE_TYPE_EXEC;
     struct iperf_test *test;
 
     // XXX: Setting the process affinity requires root on most systems.
@@ -105,7 +106,7 @@ main(int argc, char **argv)
         iperf_err(test, "parameter error - %s", iperf_strerror(i_errno));
         fprintf(stderr, "\n");
         usage_long();
-        exit(1);
+        SAFE_EXIT(1);
     }
 
     if (run(test) < 0)
