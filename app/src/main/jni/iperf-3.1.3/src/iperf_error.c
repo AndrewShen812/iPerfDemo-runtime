@@ -76,7 +76,7 @@ iperf_errexit(struct iperf_test *test, const char *format, ...)
     va_end(argp);
     if (test)
         iperf_delete_pidfile(test);
-    exit(1);
+    SAFE_EXIT(1);
 }
 
 int i_errno;

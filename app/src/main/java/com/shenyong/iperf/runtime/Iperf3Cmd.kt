@@ -42,8 +42,5 @@ class Iperf3Cmd(private val context: Context) {
         Log.d("iperf3", "exec command: ${cmdAndArgs.contentToString()}")
 
         return Runtime.getRuntime().exec(cmdAndArgs)
-//        return ProcessBuilder(cmdAndArgs.asList())
-//            .redirectErrorStream(true)
-//            .start()
     }
 }
