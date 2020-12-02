@@ -670,6 +670,7 @@ iperf_parse_arguments(struct iperf_test *test, int argc, char **argv)
 	{"no-fq-socket-pacing", no_argument, NULL, OPT_NO_FQ_SOCKET_PACING},
         {"debug", no_argument, NULL, 'd'},
         {"help", no_argument, NULL, 'h'},
+        {"tmp-path", required_argument, NULL, OPT_TMP_PATH},
         {NULL, 0, NULL, 0}
     };
     int flag;
