@@ -10,6 +10,7 @@ import android.view.View
 import android.view.animation.OvershootInterpolator
 import com.shenyong.iperf.runtime.R
 import java.text.DecimalFormat
+import kotlin.math.absoluteValue
 
 
 /**
@@ -52,8 +53,10 @@ class ArcProgressPannelView : View {
     private var curPecent = 0f
     private var drawPecent = 0f
     private var pointer: Bitmap? = null
-    private var decimalFormat = DecimalFormat("0.0")
+    private var scaleFormat = DecimalFormat("0.0")
+    private var valFormat = DecimalFormat("0.00")
     private lateinit var valueAnimator: ValueAnimator
+    private var valUnit = ""
 
     init {
         arcW = resources.getDimensionPixelSize(R.dimen.arc_progress_w).toFloat()
@@ -147,7 +150,11 @@ class ArcProgressPannelView : View {
             if (i == 0 || i % 5 == 0) {
                 canvas.drawLine(innerR, 0f, innerR - majorScaleBarH, 0f, paint)
                 if (i % 5 == 0) {
-                    val text = decimalFormat.format(value)
+                    val text = if (maxRange / STEP_COUNT > 1) {
+                        value.toInt().toString()
+                    } else {
+                        scaleFormat.format(value)
+                    }
                     value += rangeStep
                     val textLen = textPaint.measureText(text)
                     val middle = getTextMiddle() / 2
@@ -164,6 +171,18 @@ class ArcProgressPannelView : View {
             canvas.rotate(step)
         }
         canvas.restore()
+
+        /** 绘制数值 */
+        val valText = valFormat.format(maxRange * drawPecent)
+        val text = "$valText $valUnit"
+        val orgSize = textPaint.textSize
+        textPaint.textSize = orgSize * 1.5f
+        val tl = textPaint.measureText(text)
+        val sx = width / 2 - tl / 2
+        val fm = textPaint.fontMetrics
+        val sy = height - (fm.bottom + fm.top.absoluteValue) / 2
+        canvas.drawText("$valText $valUnit", sx, sy, textPaint)
+        textPaint.textSize = orgSize
     }
 
     private fun getTextMiddle(): Float {
@@ -197,8 +216,8 @@ class ArcProgressPannelView : View {
         valueAnimator.interpolator = OvershootInterpolator()
         valueAnimator.addUpdateListener { animation ->
             this.drawPecent = animation.animatedValue as Float
-            if (this.drawPecent > maxRange) {
-                this.drawPecent = maxRange
+            if (this.drawPecent > 1f) {
+                this.drawPecent = 1f
             }
             if (this.drawPecent < 0) {
                 this.drawPecent = 0f
@@ -206,5 +225,9 @@ class ArcProgressPannelView : View {
             invalidate()
         }
         valueAnimator.start()
+    }
+
+    fun setValUnitText(unit: String) {
+        valUnit = unit
     }
 }

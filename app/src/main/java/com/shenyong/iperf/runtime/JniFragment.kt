@@ -32,7 +32,8 @@ class JniFragment : Fragment() {
             viewModel.iperfTest(requireContext())
         }
         // max: 200 Mbps
-        binding.arcPannel.setMaxRange(50f)
+        binding.arcPannel.setMaxRange(200f)
+        binding.arcPannel.setValUnitText("Mbps")
         return binding.root
     }
 
