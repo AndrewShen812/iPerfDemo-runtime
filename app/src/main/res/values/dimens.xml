@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="arc_progress_w">8dp</dimen>
+    <dimen name="major_scale_bar_h">6dp</dimen>
+    <dimen name="minor_scale_bar_h">4dp</dimen>
+    <dimen name="scale_bar_w">1dp</dimen>
+    <dimen name="scale_text_size">6sp</dimen>
+    <dimen name="scale_text_offset">2dp</dimen>
+
+</resources>

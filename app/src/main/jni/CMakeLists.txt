@@ -34,13 +34,14 @@ set(CMAKE_SYSTEM_VERSION 21)
 set(CMAKE_C_FLAGS_RELEASE "-pie -fPIE -fPIC -s")
 SET(CMAKE_BUILD_TYPE "Release")
 
-# STATIC | SHARED | MODULE
+######## 编译 so 库 ########
 add_library(iperf3 SHARED ${IPERF3_C_SOURCES} ${JNI_C_SOURCES})
-#add_executable(iperf3 ${IPERF3_C_SOURCES})
-
 target_link_libraries( # Specifies the target library.
         iperf3
 
         # Links the target library to the log library
         # included in the NDK.
         log)
+
+######## 编译可执行文件 ########
+#add_executable(iperf3 ${IPERF3_C_SOURCES})
