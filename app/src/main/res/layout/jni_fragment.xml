@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.shenyong.iperf.runtime.JniViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".test.Iperf3TestActivity">
+
+        <TextView
+            android:id="@+id/tv_iperf3_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Addr:"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_iperf3_addr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="server address"
+            android:text="@={viewModel.addr}"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@id/tv_iperf3_addr"
+            app:layout_constraintStart_toEndOf="@id/tv_iperf3_addr"
+            app:layout_constraintTop_toTopOf="@id/tv_iperf3_addr"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <TextView
+            android:id="@+id/tv_iperf3_port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Port:"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/et_iperf3_addr"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_iperf3_port"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.port}"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@id/tv_iperf3_addr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_iperf3_port"
+            app:layout_constraintTop_toTopOf="@id/tv_iperf3_addr" />
+
+        <RadioGroup
+            android:id="@+id/rg_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_iperf3_addr">
+
+            <RadioButton
+                android:id="@+id/rb_dir_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上行" />
+
+            <RadioButton
+                android:id="@+id/rb_dir_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:checked="@={viewModel.isDown}"
+                android:text="下行(-R)" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_iperf3_P"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="并发连接数(-P)："
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/rg_dir"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_dir" />
+
+        <EditText
+            android:id="@+id/et_iperf3_P"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:maxLength="2"
+            android:text="@={viewModel.parallel}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_iperf3_P"
+            app:layout_constraintStart_toEndOf="@id/tv_iperf3_P"
+            app:layout_constraintTop_toTopOf="@id/tv_iperf3_P"
+            app:layout_constraintWidth_percent="0.1" />
+
+        <TextView
+            android:id="@+id/tv_iperf3_bw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="带宽(-b)："
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/et_iperf3_P"
+            app:layout_constraintTop_toTopOf="@id/tv_iperf3_P" />
+
+        <EditText
+            android:id="@+id/et_iperf3_bw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:maxLength="4"
+            android:text="@={viewModel.bandwidth}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_iperf3_bw"
+            app:layout_constraintStart_toEndOf="@id/tv_iperf3_bw"
+            app:layout_constraintTop_toTopOf="@id/tv_iperf3_bw"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <TextView
+            android:id="@+id/tv_iperf3_bw_u"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mbps"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/et_iperf3_bw"
+            app:layout_constraintTop_toTopOf="@id/tv_iperf3_P" />
+
+        <Button
+            android:id="@+id/btn_iperf3_go"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="GO"
+            app:layout_constraintEnd_toStartOf="@+id/arc_pannel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/arc_pannel"
+            app:layout_constraintBottom_toBottomOf="@+id/arc_pannel"
+            app:layout_constraintWidth_percent="0.25" />
+
+        <com.shenyong.iperf.runtime.widget.ArcProgressPannelView
+            android:id="@+id/arc_pannel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintStart_toEndOf="@id/btn_iperf3_go"
+            app:layout_constraintTop_toBottomOf="@id/tv_iperf3_bw_u"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/arc_pannel">
+
+            <TextView
+                android:id="@+id/tv_iperf3_log"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@{viewModel.log}"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

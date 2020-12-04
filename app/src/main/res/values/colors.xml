@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="arc_bar_1">#00BEFF</color>
+    <color name="arc_bar_2">#00C0FF</color>
+    <color name="arc_bar_3">#5BED6B</color>
+    <color name="arc_bar_4">#9BEF41</color>
+    <color name="arc_bar_5">#F5EF0F</color>
+    <color name="arc_bar_6">#FDCC0A</color>
+    <color name="arc_scale_bar_color">#42E5FB</color>
+
 </resources>

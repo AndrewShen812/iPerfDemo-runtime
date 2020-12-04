@@ -6,8 +6,8 @@ package com.iperf3.jni;
  * @date 2020/11/26
  */
 public class Iperf3Config {
-    private static final long BANDWIDTH_1M = 1000 * 1000;
-    private static final long BANDWIDTH_1000M = 1000 * BANDWIDTH_1M;
+    public static final long BANDWIDTH_1M = 1000 * 1000;
+    public static final long BANDWIDTH_1000M = 1000 * BANDWIDTH_1M;
 
     /** */
     /** 服务器地址 */
@@ -18,7 +18,7 @@ public class Iperf3Config {
     public boolean isDownMode;
     /** 中间测试结果的报告间隔，取值范围：[0.1, 60.0]，单位：秒，默认间隔1秒 */
     public double interval = 1.0;
-    /** 带宽限制，单位：bps */
+    /** 带宽限制，单位：bps，默认1000Mbps */
     public long bandwidth = BANDWIDTH_1000M;
     /**
      * 回调接口中数据的单位，默认为：Mbit。设置规则：</br>
