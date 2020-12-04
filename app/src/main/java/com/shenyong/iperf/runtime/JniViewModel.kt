@@ -21,10 +21,10 @@ class JniViewModel : ViewModel(), Iperf3Callback {
         private const val TAG = "iperf3Jni"
     }
     
-//    val addr = MutableLiveData<String>("bouygues.iperf.fr")
-//    val port = MutableLiveData<String>("9200")
-    val addr = MutableLiveData<String>("192.168.42.90")
-    val port = MutableLiveData<String>("5201")
+    val addr = MutableLiveData<String>("iperf.biznetnetworks.com")
+    val port = MutableLiveData<String>("5203")
+//    val addr = MutableLiveData<String>("192.168.42.90")
+//    val port = MutableLiveData<String>("5201")
     val parallel = MutableLiveData<String>("2")
     val bandwidth = MutableLiveData<String>("1000")
     val isDown = MutableLiveData<Boolean>(true)
