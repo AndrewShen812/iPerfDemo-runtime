@@ -1,1 +1,10 @@
 /build
+src/main/jni/cmake_build/CMakeFiles
+src/main/jni/cmake_build/android_gradle_build.json
+src/main/jni/cmake_build/cmake_install.cmake
+src/main/jni/cmake_build/CMakeCache.txt
+/src/main/jni/cmake_build/Makefile
+/src/main/jni/cmake_build/iperf3
+/src/main/jni/cmake_build/libiperf3.so
+/src/main/libs/
+/src/main/obj/
